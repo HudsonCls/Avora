@@ -14,7 +14,7 @@ const schema = z.object({
   TWILIO_ACCOUNT_SID: z.string().optional().default(''),
   TWILIO_AUTH_TOKEN: z.string().optional().default(''),
   TWILIO_WHATSAPP_FROM: z.string().optional().default(''),
-  WHATSAPP_VERIFY_TOKEN: z.string().default('fincontrol-verify'),
+  WHATSAPP_VERIFY_TOKEN: z.string().default('avora-verify'),
   // Se definido, o POST do webhook exige ?token=<secret> (protege contra abuso público).
   WHATSAPP_WEBHOOK_SECRET: z.string().optional().default(''),
   // "*" libera tudo (padrão). Em produção, use a URL do frontend (Vercel).

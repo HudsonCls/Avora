@@ -228,7 +228,7 @@ describe('Reports API', () => {
     expect(res.status).toBe(200);
     expect(res.headers['content-type']).toContain('text/csv');
     expect(res.headers['content-disposition']).toContain('attachment');
-    expect(res.headers['content-disposition']).toContain(`fincontrol-transacoes-${MONTH}.csv`);
+    expect(res.headers['content-disposition']).toContain(`avora-transacoes-${MONTH}.csv`);
 
     const text = res.text as string;
     const lines = text.replace(/^\uFEFF/, '').split('\r\n');

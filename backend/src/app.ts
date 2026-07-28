@@ -35,7 +35,7 @@ export function createApp(): Application {
   if (!isTest) app.use(morgan('dev'));
 
   app.get('/api/health', (_req, res) => {
-    res.json({ data: { status: 'ok', service: 'fincontrol-backend' } });
+    res.json({ data: { status: 'ok', service: 'avora-backend' } });
   });
 
   app.use('/api/auth', authRouter);

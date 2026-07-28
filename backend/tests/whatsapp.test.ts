@@ -5,7 +5,7 @@ import { prisma } from '../src/lib/prisma';
 import { resetDb, createTestUser, createCategoryFor } from './helpers';
 
 const app = createApp();
-const VERIFY_TOKEN = 'fincontrol-verify';
+const VERIFY_TOKEN = 'avora-verify';
 
 describe('WhatsApp webhook', () => {
   let userId: string;
