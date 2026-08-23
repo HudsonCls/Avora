@@ -7,6 +7,7 @@ import {
   XAxis,
   Tooltip,
   Cell,
+  CartesianGrid,
 } from 'recharts';
 import {
   ArrowDownCircle,
@@ -15,6 +16,7 @@ import {
   MessageCircle,
   AlertTriangle,
   Plus,
+  Inbox,
 } from 'lucide-react';
 import { Layout } from '@/components/Layout';
 import { MonthSelector } from '@/components/MonthSelector';
@@ -97,7 +99,7 @@ export default function DashboardPage() {
       ) : (
         <div className="space-y-4">
           {unreadAlert && (
-            <div className="flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-2.5 text-sm text-amber-800 dark:border-amber-900 dark:bg-amber-950/40 dark:text-amber-300">
+            <div className="flex items-center gap-2 rounded-lg border-l-4 border-amber-500 bg-amber-50 px-4 py-2.5 text-sm text-amber-800 dark:bg-amber-950/30 dark:text-amber-300">
               <AlertTriangle size={16} />
               {unreadAlert.message}
             </div>
@@ -139,6 +141,10 @@ export default function DashboardPage() {
               </div>
               <ResponsiveContainer width="100%" height={180}>
                 <BarChart data={chartData} margin={{ top: 4, right: 4, bottom: 0, left: 4 }}>
+                  <CartesianGrid
+                    vertical={false}
+                    stroke={isDark ? '#1e293b' : '#f1f5f9'}
+                  />
                   <XAxis
                     dataKey="day"
                     tick={{ fontSize: 10, fill: isDark ? '#64748b' : '#94a3b8' }}
@@ -197,7 +203,8 @@ export default function DashboardPage() {
                     </div>
                   ))
                 ) : (
-                  <p className="py-6 text-center text-sm text-slate-400 dark:text-slate-600">
+                  <p className="flex flex-col items-center gap-2 py-6 text-center text-sm text-slate-400 dark:text-slate-600">
+                    <Inbox size={22} className="text-slate-300 dark:text-slate-700" />
                     Sem gastos no mês
                   </p>
                 )}
@@ -245,7 +252,8 @@ export default function DashboardPage() {
                   );
                 })}
                 {!recent.data?.data.length && (
-                  <p className="py-6 text-center text-sm text-slate-400 dark:text-slate-600">
+                  <p className="flex flex-col items-center gap-2 py-6 text-center text-sm text-slate-400 dark:text-slate-600">
+                    <Inbox size={22} className="text-slate-300 dark:text-slate-700" />
                     Nenhuma transação ainda
                   </p>
                 )}
@@ -289,7 +297,8 @@ export default function DashboardPage() {
                     );
                   })
                 ) : (
-                  <p className="col-span-2 py-6 text-center text-sm text-slate-400 dark:text-slate-600">
+                  <p className="col-span-2 flex flex-col items-center gap-2 py-6 text-center text-sm text-slate-400 dark:text-slate-600">
+                    <Inbox size={22} className="text-slate-300 dark:text-slate-700" />
                     Nenhum orçamento definido
                   </p>
                 )}

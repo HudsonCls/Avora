@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search as SearchIcon, Download } from 'lucide-react';
+import { Search as SearchIcon, Download, Inbox } from 'lucide-react';
 import { Layout } from '@/components/Layout';
 import { MonthSelector } from '@/components/MonthSelector';
 import { Card, Spinner, Badge, Button } from '@/components/ui';
@@ -59,10 +59,13 @@ export default function SearchPage() {
             />
           </div>
 
-          <div className="flex flex-wrap gap-1.5">
+          <div
+            className="flex gap-1.5 overflow-x-auto pb-0.5"
+            style={{ maskImage: 'linear-gradient(to right, black 94%, transparent)' }}
+          >
             <button
               onClick={() => setCategory('')}
-              className={`rounded-full border px-3 py-1 text-xs ${
+              className={`flex-shrink-0 whitespace-nowrap rounded-full border px-3 py-1 text-xs ${
                 category === ''
                   ? 'border-brand bg-brand-50 text-brand dark:bg-brand/10'
                   : 'border-slate-200 text-slate-500 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800'
@@ -74,7 +77,7 @@ export default function SearchPage() {
               <button
                 key={c.id}
                 onClick={() => setCategory(c.name)}
-                className={`rounded-full border px-3 py-1 text-xs ${
+                className={`flex-shrink-0 whitespace-nowrap rounded-full border px-3 py-1 text-xs ${
                   category === c.name
                     ? 'border-brand bg-brand-50 text-brand dark:bg-brand/10'
                     : 'border-slate-200 text-slate-500 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800'
@@ -97,7 +100,11 @@ export default function SearchPage() {
                     {category || 'Todas as categorias'} · {q ? `"${q}" · ` : ''}
                     {result?.count ?? 0} lançamento(s)
                   </div>
-                  <div className="mt-1 text-3xl font-semibold text-red-600 dark:text-red-400">
+                  <div
+                    className={`mt-1 text-3xl font-semibold ${
+                      result?.count ? 'text-red-600 dark:text-red-400' : 'text-slate-400 dark:text-slate-600'
+                    }`}
+                  >
                     <Money value={result?.total ?? 0} />
                   </div>
                 </div>
@@ -144,7 +151,8 @@ export default function SearchPage() {
                   );
                 })}
                 {!result?.transactions.length && (
-                  <p className="py-10 text-center text-sm text-slate-400 dark:text-slate-600">
+                  <p className="flex flex-col items-center gap-2 py-10 text-center text-sm text-slate-400 dark:text-slate-600">
+                    <Inbox size={22} className="text-slate-300 dark:text-slate-700" />
                     Nenhum lançamento encontrado para esse filtro
                   </p>
                 )}

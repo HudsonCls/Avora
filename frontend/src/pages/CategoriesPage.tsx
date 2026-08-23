@@ -141,7 +141,7 @@ export default function CategoriesPage() {
           {categories.data?.map((c) => {
             const Icon = categoryIcon(c.name);
             return (
-              <Card key={c.id} className="flex items-center gap-3 p-4">
+              <Card key={c.id} className="group flex items-center gap-3 p-4">
                 <div
                   className="flex h-10 w-10 items-center justify-center rounded-lg"
                   style={{ background: `${c.color}1a` }}
@@ -153,7 +153,7 @@ export default function CategoriesPage() {
                     {c.name}
                   </div>
                   <div className="mt-0.5 flex items-center gap-1.5">
-                    <Badge color={c.type === 'INCOME' ? '#16a34a' : '#64748b'}>
+                    <Badge color={c.type === 'INCOME' ? '#16a34a' : '#dc2626'}>
                       {c.type === 'INCOME' ? 'Receita' : 'Despesa'}
                     </Badge>
                     {c.monthlyLimit != null && (
@@ -165,7 +165,7 @@ export default function CategoriesPage() {
                 </div>
                 <button
                   onClick={() => del.mutate(c.id)}
-                  className="text-slate-300 hover:text-red-500 dark:text-slate-600 dark:hover:text-red-400"
+                  className="text-slate-300 opacity-40 transition-opacity hover:text-red-500 hover:opacity-100 group-hover:opacity-100 dark:text-slate-600 dark:hover:text-red-400"
                   aria-label="Excluir"
                 >
                   <Trash2 size={15} />

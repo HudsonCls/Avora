@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, Inbox } from 'lucide-react';
 import { Layout } from '@/components/Layout';
 import { Card, Button, Badge, Spinner, Modal, Field, Input } from '@/components/ui';
 import { Money } from '@/components/Money';
@@ -206,7 +206,7 @@ export default function TransactionsPage() {
                 return (
                   <tr
                     key={t.id}
-                    className="border-b border-slate-50 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800/60"
+                    className="group border-b border-slate-50 odd:bg-transparent even:bg-slate-50/60 hover:bg-slate-100 dark:border-slate-800 dark:even:bg-white/[0.02] dark:hover:bg-slate-800/60"
                   >
                     <td className="whitespace-nowrap px-4 py-2.5 text-slate-500 dark:text-slate-400">
                       {formatDate(t.date)}
@@ -234,7 +234,7 @@ export default function TransactionsPage() {
                     <td className="px-4 py-2.5 text-right">
                       <button
                         onClick={() => del.mutate(t.id)}
-                        className="text-slate-300 hover:text-red-500 dark:text-slate-600 dark:hover:text-red-400"
+                        className="text-slate-300 opacity-40 transition-opacity hover:text-red-500 hover:opacity-100 group-hover:opacity-100 dark:text-slate-600 dark:hover:text-red-400"
                         aria-label="Excluir"
                       >
                         <Trash2 size={15} />
@@ -246,7 +246,10 @@ export default function TransactionsPage() {
               {!txs.data?.data.length && (
                 <tr>
                   <td colSpan={6} className="py-10 text-center text-sm text-slate-400 dark:text-slate-600">
-                    Nenhuma transação encontrada
+                    <div className="flex flex-col items-center gap-2">
+                      <Inbox size={22} className="text-slate-300 dark:text-slate-700" />
+                      Nenhuma transação encontrada
+                    </div>
                   </td>
                 </tr>
               )}

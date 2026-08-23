@@ -1,7 +1,8 @@
+import { Check } from 'lucide-react';
 import { useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { MonthSelector } from '@/components/MonthSelector';
-import { Card, Button, Spinner } from '@/components/ui';
+import { Card, Spinner } from '@/components/ui';
 import { Money } from '@/components/Money';
 import { categoryIcon } from '@/lib/icons';
 import { currentMonth } from '@/lib/format';
@@ -73,7 +74,7 @@ export default function BudgetsPage() {
                   )}
                 </div>
 
-                {limit > 0 && (
+                {limit > 0 ? (
                   <>
                     <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
                       <div
@@ -85,27 +86,32 @@ export default function BudgetsPage() {
                       <Money value={spent} /> de <Money value={limit} />
                     </div>
                   </>
+                ) : (
+                  <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800/60" />
                 )}
 
-                <div className="mt-3 flex items-center gap-2">
-                  <div className="flex flex-1 items-center gap-1 rounded-lg border border-slate-200 px-2 dark:border-slate-700">
-                    <span className="text-xs text-slate-400 dark:text-slate-500">R$</span>
-                    <input
-                      value={editing ? edits[c.id] : limit || ''}
-                      onChange={(e) => setEdits((s) => ({ ...s, [c.id]: e.target.value }))}
-                      placeholder="definir limite"
-                      inputMode="decimal"
-                      className="w-full bg-transparent py-1.5 text-sm text-slate-800 outline-none placeholder:text-slate-400 dark:text-slate-100 dark:placeholder:text-slate-500"
-                    />
-                  </div>
-                  <Button
-                    variant="primary"
+                <div className="mt-3 flex items-center gap-1 rounded-lg border border-slate-200 pl-2 pr-1 dark:border-slate-700">
+                  <span className="text-xs text-slate-400 dark:text-slate-500">R$</span>
+                  <input
+                    value={editing ? edits[c.id] : limit || ''}
+                    onChange={(e) => setEdits((s) => ({ ...s, [c.id]: e.target.value }))}
+                    onKeyDown={(e) => e.key === 'Enter' && save(c.id)}
+                    placeholder="definir limite"
+                    inputMode="decimal"
+                    className="w-full bg-transparent py-1.5 text-sm text-slate-800 outline-none placeholder:text-slate-400 dark:text-slate-100 dark:placeholder:text-slate-500"
+                  />
+                  <button
                     onClick={() => save(c.id)}
                     disabled={!editing}
-                    loading={setBudget.isPending && setBudget.variables?.categoryId === c.id}
+                    aria-label="Salvar limite"
+                    className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md text-slate-300 transition-colors enabled:text-avora-green enabled:hover:bg-avora-green/10 disabled:cursor-not-allowed dark:text-slate-600 dark:enabled:text-avora-mist"
                   >
-                    Salvar
-                  </Button>
+                    {setBudget.isPending && setBudget.variables?.categoryId === c.id ? (
+                      <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                    ) : (
+                      <Check size={16} />
+                    )}
+                  </button>
                 </div>
               </Card>
             );

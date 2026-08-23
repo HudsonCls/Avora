@@ -6,7 +6,7 @@ import { useTheme } from '@/context/ThemeContext';
  * cross-fade + rotação suave — sinaliza claramente a ação (o ícone mostrado
  * é o estado ATUAL, clicar alterna). Acessível via aria-label/aria-pressed.
  */
-export function ThemeToggle() {
+export function ThemeToggle({ bare }: { bare?: boolean } = {}) {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === 'dark';
 
@@ -17,7 +17,11 @@ export function ThemeToggle() {
       aria-checked={isDark}
       aria-label={isDark ? 'Ativar tema claro' : 'Ativar tema escuro'}
       title={isDark ? 'Tema escuro (clique para claro)' : 'Tema claro (clique para escuro)'}
-      className="relative flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition-colors hover:bg-slate-50 hover:text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-200"
+      className={
+        bare
+          ? 'relative flex h-9 w-9 flex-shrink-0 items-center justify-center bg-white text-slate-500 transition-colors hover:bg-slate-50 hover:text-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-200'
+          : 'relative flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition-colors hover:bg-slate-50 hover:text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-200'
+      }
     >
       <Sun
         size={17}
