@@ -21,6 +21,7 @@ import { ProfileModal } from '@/components/ProfileModal';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { PrivacyToggle } from '@/components/PrivacyToggle';
 import { AvoraMark } from '@/components/AvoraMark';
+import { Modal, Button } from '@/components/ui';
 
 const NAV = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard, end: true },
@@ -39,6 +40,7 @@ function Sidebar({ mobileOpen, onCloseMobile }: { mobileOpen: boolean; onCloseMo
   const unread = alerts?.filter((a) => !a.read).length ?? 0;
   const initial = user?.name?.charAt(0).toUpperCase() ?? 'U';
   const [profileOpen, setProfileOpen] = useState(false);
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
 
   return (
     <aside
@@ -114,7 +116,7 @@ function Sidebar({ mobileOpen, onCloseMobile }: { mobileOpen: boolean; onCloseMo
             </div>
           </button>
           <button
-            onClick={logout}
+            onClick={() => setLogoutConfirmOpen(true)}
             className="flex-shrink-0 text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400"
             aria-label="Sair"
             title="Sair"
@@ -125,6 +127,22 @@ function Sidebar({ mobileOpen, onCloseMobile }: { mobileOpen: boolean; onCloseMo
       </div>
 
       <ProfileModal open={profileOpen} onClose={() => setProfileOpen(false)} />
+
+      <Modal open={logoutConfirmOpen} onClose={() => setLogoutConfirmOpen(false)} title="Sair da conta">
+        <div className="space-y-4">
+          <p className="text-sm text-slate-600 dark:text-slate-300">
+            Tem certeza que deseja se desconectar?
+          </p>
+          <div className="flex justify-end gap-2">
+            <Button variant="secondary" onClick={() => setLogoutConfirmOpen(false)}>
+              Não
+            </Button>
+            <Button variant="danger" onClick={logout}>
+              Sim
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </aside>
   );
 }
