@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, Palette } from 'lucide-react';
 import { Layout } from '@/components/Layout';
 import { Card, Button, Badge, Spinner, Modal, Field, Input } from '@/components/ui';
 import { Money } from '@/components/Money';
@@ -7,12 +7,31 @@ import { categoryIcon } from '@/lib/icons';
 import { apiError } from '@/lib/api';
 import { useCategories, useCreateCategory, useDeleteCategory } from '@/lib/queries';
 
-const COLORS = ['#16a34a', '#f59e0b', '#3b82f6', '#8b5cf6', '#ec4899', '#10b981', '#ef4444', '#6b7280'];
+// Paleta ampliada: tons financeiros (verde de crescimento, dourado de patrimônio,
+// azul-marinho e teal de confiança/bancos, vermelho de alerta de gasto) combinados
+// com cores mais neutras/variadas para qualquer pessoa achar a sua favorita.
+const COLORS = [
+  '#16a34a', // verde — crescimento/dinheiro
+  '#0f766e', // teal — estabilidade
+  '#2563eb', // azul — confiança/bancos
+  '#1e3a8a', // azul-marinho
+  '#7c3aed', // roxo
+  '#db2777', // pink
+  '#f59e0b', // âmbar — patrimônio
+  '#ca8a04', // dourado
+  '#dc2626', // vermelho — alerta de gasto
+  '#0891b2', // ciano
+  '#65a30d', // verde-oliva
+  '#4338ca', // índigo
+  '#78716c', // marrom/pedra
+  '#6b7280', // cinza neutro
+];
 
 function NewCategoryModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const create = useCreateCategory();
   const [form, setForm] = useState({ name: '', type: 'EXPENSE', color: COLORS[0], monthlyLimit: '' });
   const [error, setError] = useState('');
+  const isPresetColor = COLORS.includes(form.color);
 
   async function submit(e: FormEvent) {
     e.preventDefault();
@@ -58,7 +77,7 @@ function NewCategoryModal({ open, onClose }: { open: boolean; onClose: () => voi
           </Field>
         </div>
         <Field label="Cor">
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {COLORS.map((c) => (
               <button
                 key={c}
@@ -69,6 +88,22 @@ function NewCategoryModal({ open, onClose }: { open: boolean; onClose: () => voi
                 aria-label={c}
               />
             ))}
+            <div className="relative h-7 w-7">
+              <input
+                type="color"
+                value={form.color}
+                onChange={(e) => setForm({ ...form, color: e.target.value })}
+                className="absolute inset-0 h-7 w-7 cursor-pointer opacity-0"
+                aria-label="Escolher cor personalizada"
+                title="Escolher cor personalizada"
+              />
+              <div
+                className={`pointer-events-none flex h-7 w-7 items-center justify-center rounded-full border-2 border-dashed border-slate-300 dark:border-slate-600 ${!isPresetColor ? 'ring-2 ring-offset-2 ring-slate-400 dark:ring-offset-slate-900' : ''}`}
+                style={isPresetColor ? undefined : { background: form.color, borderStyle: 'solid' }}
+              >
+                {isPresetColor && <Palette size={13} className="text-slate-400 dark:text-slate-500" />}
+              </div>
+            </div>
           </div>
         </Field>
         {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
