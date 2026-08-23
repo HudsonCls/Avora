@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, type FormEvent } from 'react';
-import { Lock, DollarSign, Fingerprint } from 'lucide-react';
+import { Lock, Fingerprint } from 'lucide-react';
 import { useAppLock } from '@/context/AppLockContext';
 import { useAuth } from '@/context/AuthContext';
+import { AvoraMark } from '@/components/AvoraMark';
 
 export function LockScreen() {
   const { unlock, disablePin, biometricAvailable, unlockWithBiometrics } = useAppLock();
@@ -35,8 +36,8 @@ export function LockScreen() {
 
   return (
     <div className="fixed inset-0 z-[70] flex flex-col items-center justify-center gap-6 bg-slate-50 px-8 dark:bg-slate-950">
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand text-white">
-        <DollarSign size={26} />
+      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-avora-deep text-avora-green">
+        <AvoraMark className="h-7 w-7" />
       </div>
       <div className="flex flex-col items-center gap-1 text-center">
         <div className="flex items-center gap-1.5 text-sm font-medium text-slate-700 dark:text-slate-200">

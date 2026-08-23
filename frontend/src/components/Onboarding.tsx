@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { MessageCircle, Target, Eye, ChevronRight, DollarSign } from 'lucide-react';
+import { MessageCircle, Target, Eye, ChevronRight } from 'lucide-react';
+import { AvoraMark } from '@/components/AvoraMark';
 
 const STORAGE_KEY = 'fincontrol_onboarded';
 
@@ -40,8 +41,8 @@ export function Onboarding() {
     <div className="fixed inset-0 z-[60] flex flex-col bg-slate-50 dark:bg-slate-950">
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand text-white">
-            <DollarSign size={15} />
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-avora-deep text-avora-green">
+            <AvoraMark className="h-4 w-4" />
           </div>
           <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">Avora</span>
         </div>

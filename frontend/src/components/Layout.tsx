@@ -9,7 +9,6 @@ import {
   Tag,
   Wallet,
   Bell,
-  DollarSign,
   LogOut,
   Smartphone,
   Menu,
@@ -21,6 +20,7 @@ import { useAlerts } from '@/lib/queries';
 import { ProfileModal } from '@/components/ProfileModal';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { PrivacyToggle } from '@/components/PrivacyToggle';
+import { AvoraMark } from '@/components/AvoraMark';
 
 const NAV = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard, end: true },
@@ -43,13 +43,13 @@ function Sidebar({ mobileOpen, onCloseMobile }: { mobileOpen: boolean; onCloseMo
   return (
     <aside
       className={clsx(
-        'fixed inset-y-0 left-0 z-40 flex w-60 flex-shrink-0 flex-col border-r border-slate-200 bg-white transition-transform duration-200 ease-in-out dark:border-slate-800 dark:bg-slate-900 md:static md:z-auto md:translate-x-0',
+        'fixed inset-y-0 left-0 z-40 flex w-full flex-shrink-0 flex-col border-r border-slate-200 bg-white transition-transform duration-200 ease-in-out dark:border-slate-800 dark:bg-slate-900 md:static md:z-auto md:w-72 md:translate-x-0',
         mobileOpen ? 'translate-x-0' : '-translate-x-full',
       )}
     >
       <div className="flex items-center gap-2.5 px-4 py-5">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand text-white">
-          <DollarSign size={18} />
+        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-avora-deep text-avora-green">
+          <AvoraMark className="h-5 w-5" />
         </div>
         <div className="flex-1">
           <div className="text-sm font-semibold text-slate-800 dark:text-slate-100">Avora</div>

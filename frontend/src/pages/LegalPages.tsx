@@ -1,7 +1,8 @@
 import { type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { DollarSign, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { AvoraMark } from '@/components/AvoraMark';
 
 const CONTACT_EMAIL = 'hudsoncalasansbsb@gmail.com';
 const LAST_UPDATE = 'julho de 2026';
@@ -11,8 +12,8 @@ function LegalLayout({ title, children }: { title: string; children: ReactNode }
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <header className="border-b border-slate-200 bg-white px-4 py-3 dark:border-slate-800 dark:bg-slate-900">
         <div className="mx-auto flex max-w-2xl items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-white">
-            <DollarSign size={16} />
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-avora-deep text-avora-green">
+            <AvoraMark className="h-4 w-4" />
           </div>
           <span className="flex-1 text-sm font-semibold text-slate-800 dark:text-slate-100">
             Avora
