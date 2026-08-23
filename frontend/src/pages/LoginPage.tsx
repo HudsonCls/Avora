@@ -209,11 +209,6 @@ export default function LoginPage() {
               .
             </p>
           )}
-          {mode === 'login' && (
-            <p className="mt-2 text-center text-xs text-slate-400 dark:text-slate-500">
-              Demo: demo@fincontrol.dev / demo1234
-            </p>
-          )}
         </div>
 
         <p className="mt-4 text-center text-[11px] text-slate-400 dark:text-slate-600">
