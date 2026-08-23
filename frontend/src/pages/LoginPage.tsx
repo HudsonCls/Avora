@@ -172,10 +172,10 @@ export default function LoginPage() {
               </Field>
             )}
             <Field label="E-mail">
-              <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="Digite seu e-mail" />
             </Field>
             <Field label="Senha">
-              <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="Digite sua senha" />
             </Field>
             {mode === 'register' && (
               <Field label="Telefone (WhatsApp, opcional)">
