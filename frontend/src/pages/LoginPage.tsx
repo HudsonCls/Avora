@@ -1,9 +1,21 @@
 import { useState, type FormEvent } from 'react';
-import { DollarSign } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { api, apiError } from '@/lib/api';
 import { Button, Input, Field, Modal } from '@/components/ui';
 import { ThemeToggle } from '@/components/ThemeToggle';
+
+/** Logomarca oficial Avora — o "A" em formato de pico com o ponto, do brandbook. */
+function AvoraMark({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M50 14 L83 79 C84 81 82.5 83 80.5 83 L69 83 C67.5 83 66 82 65.5 80.5 L50 47 L34.5 80.5 C34 82 32.5 83 31 83 L19.5 83 C17.5 83 16 81 17 79 L50 14Z"
+        fill="currentColor"
+      />
+      <circle cx="50" cy="61" r="7.5" fill="currentColor" />
+    </svg>
+  );
+}
 
 function ForgotPasswordModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [step, setStep] = useState<'email' | 'code' | 'done'>('email');
@@ -136,88 +148,100 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="relative grid min-h-screen place-items-center bg-slate-50 p-4 dark:bg-slate-950">
-      <div className="absolute right-4 top-4">
+    <div className="relative min-h-screen overflow-hidden bg-avora-bg dark:bg-slate-950">
+      {/* Glow decorativo sutil, some no dark */}
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-96 w-[36rem] -translate-x-1/2 rounded-full bg-avora-mist/40 blur-3xl dark:hidden" />
+
+      <div className="absolute right-4 top-4 z-10">
         <ThemeToggle />
       </div>
-      <div className="w-full max-w-sm">
-        <div className="mb-6 flex flex-col items-center gap-2">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand text-white">
-            <DollarSign size={24} />
-          </div>
-          <h1 className="text-xl font-semibold text-slate-800 dark:text-slate-100">Avora</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">seu hub de controle financeiro</p>
-        </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-          <div className="mb-4 flex rounded-lg bg-slate-100 p-1 text-sm dark:bg-slate-800">
-            <button
-              className={`flex-1 rounded-md py-1.5 font-medium ${mode === 'login' ? 'bg-white text-slate-800 shadow-sm dark:bg-slate-700 dark:text-slate-100' : 'text-slate-500 dark:text-slate-400'}`}
-              onClick={() => setMode('login')}
-            >
-              Entrar
-            </button>
-            <button
-              className={`flex-1 rounded-md py-1.5 font-medium ${mode === 'register' ? 'bg-white text-slate-800 shadow-sm dark:bg-slate-700 dark:text-slate-100' : 'text-slate-500 dark:text-slate-400'}`}
-              onClick={() => setMode('register')}
-            >
-              Criar conta
-            </button>
+      <div className="relative grid min-h-screen place-items-center p-4">
+        <div className="w-full max-w-sm">
+          <div className="mb-7 flex flex-col items-center gap-3">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-avora-deep text-avora-green shadow-lg shadow-avora-deep/20">
+              <AvoraMark className="h-7 w-7" />
+            </div>
+            <div className="text-center">
+              <h1 className="text-2xl font-bold tracking-tight text-avora-deep dark:text-slate-50">
+                avora
+              </h1>
+              <p className="mt-0.5 text-sm text-avora-slate dark:text-slate-400">
+                Sua vida financeira, do seu jeito.
+              </p>
+            </div>
           </div>
 
-          <form onSubmit={onSubmit} className="space-y-3">
-            {mode === 'register' && (
-              <Field label="Nome">
-                <Input value={name} onChange={(e) => setName(e.target.value)} required placeholder="Seu nome" />
+          <div className="rounded-2xl border border-slate-200/70 bg-white p-6 shadow-xl shadow-slate-900/5 dark:border-slate-800 dark:bg-slate-900">
+            <div className="mb-5 flex rounded-lg bg-avora-bg p-1 text-sm dark:bg-slate-800">
+              <button
+                className={`flex-1 rounded-md py-1.5 font-medium transition-colors ${mode === 'login' ? 'bg-avora-deep text-white shadow-sm' : 'text-avora-slate hover:text-avora-deep dark:text-slate-400 dark:hover:text-slate-200'}`}
+                onClick={() => setMode('login')}
+              >
+                Entrar
+              </button>
+              <button
+                className={`flex-1 rounded-md py-1.5 font-medium transition-colors ${mode === 'register' ? 'bg-avora-deep text-white shadow-sm' : 'text-avora-slate hover:text-avora-deep dark:text-slate-400 dark:hover:text-slate-200'}`}
+                onClick={() => setMode('register')}
+              >
+                Criar conta
+              </button>
+            </div>
+
+            <form onSubmit={onSubmit} className="space-y-3">
+              {mode === 'register' && (
+                <Field label="Nome">
+                  <Input value={name} onChange={(e) => setName(e.target.value)} required placeholder="Seu nome" />
+                </Field>
+              )}
+              <Field label="E-mail">
+                <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="Digite seu e-mail" />
               </Field>
-            )}
-            <Field label="E-mail">
-              <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="Digite seu e-mail" />
-            </Field>
-            <Field label="Senha">
-              <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="Digite sua senha" />
-            </Field>
-            {mode === 'register' && (
-              <Field label="Telefone (WhatsApp, opcional)">
-                <Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+5561999990000" />
+              <Field label="Senha">
+                <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="Digite sua senha" />
               </Field>
+              {mode === 'register' && (
+                <Field label="Telefone (WhatsApp, opcional)">
+                  <Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+5561999990000" />
+                </Field>
+              )}
+
+              {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
+
+              <Button type="submit" variant="primary" loading={loading} className="w-full !bg-avora-deep !border-avora-deep hover:!bg-avora-deep/90">
+                {mode === 'login' ? 'Entrar' : 'Criar conta'}
+              </Button>
+            </form>
+
+            {mode === 'login' && (
+              <button
+                type="button"
+                onClick={() => setForgotOpen(true)}
+                className="mt-3 w-full text-center text-xs font-medium text-avora-green hover:underline"
+              >
+                Esqueci minha senha
+              </button>
             )}
+            {mode === 'register' && (
+              <p className="mt-3 text-center text-[11px] text-avora-slate dark:text-slate-500">
+                Ao criar a conta você concorda com os{' '}
+                <a href="/termos" target="_blank" className="underline">Termos de Uso</a> e a{' '}
+                <a href="/privacidade" target="_blank" className="underline">
+                  Política de Privacidade
+                </a>
+                .
+              </p>
+            )}
+          </div>
 
-            {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
-
-            <Button type="submit" variant="primary" loading={loading} className="w-full">
-              {mode === 'login' ? 'Entrar' : 'Criar conta'}
-            </Button>
-          </form>
-
-          {mode === 'login' && (
-            <button
-              type="button"
-              onClick={() => setForgotOpen(true)}
-              className="mt-3 w-full text-center text-xs text-brand hover:underline"
-            >
-              Esqueci minha senha
-            </button>
-          )}
-          {mode === 'register' && (
-            <p className="mt-3 text-center text-[11px] text-slate-400 dark:text-slate-500">
-              Ao criar a conta você concorda com os{' '}
-              <a href="/termos" target="_blank" className="underline">Termos de Uso</a> e a{' '}
-              <a href="/privacidade" target="_blank" className="underline">
-                Política de Privacidade
-              </a>
-              .
-            </p>
-          )}
+          <p className="mt-5 text-center text-[11px] text-avora-slate/80 dark:text-slate-600">
+            <a href="/termos" target="_blank" className="hover:underline">Termos de Uso</a>
+            {' · '}
+            <a href="/privacidade" target="_blank" className="hover:underline">
+              Política de Privacidade
+            </a>
+          </p>
         </div>
-
-        <p className="mt-4 text-center text-[11px] text-slate-400 dark:text-slate-600">
-          <a href="/termos" target="_blank" className="hover:underline">Termos de Uso</a>
-          {' · '}
-          <a href="/privacidade" target="_blank" className="hover:underline">
-            Política de Privacidade
-          </a>
-        </p>
       </div>
 
       <ForgotPasswordModal open={forgotOpen} onClose={() => setForgotOpen(false)} />
