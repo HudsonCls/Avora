@@ -9,6 +9,9 @@ import {
   Briefcase,
   ShoppingCart,
   Plane,
+  CircleDollarSign,
+  CalendarFold,
+  Baby,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -27,5 +30,8 @@ export function categoryIcon(name: string): LucideIcon {
   if (/compra|shopping/.test(n)) return ShoppingCart;
   if (/viag|turismo/.test(n)) return Plane;
   if (/conta|saldo|carteira/.test(n)) return Wallet;
+  if (/pix/.test(n)) return CircleDollarSign;
+  if (/mensalidade/.test(n)) return CalendarFold;
+  if (/filho ravi/.test(n)) return Baby;
   return Tag;
 }
