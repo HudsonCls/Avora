@@ -1,4 +1,4 @@
-# FinControl — Hub de Controle Financeiro
+# AVORA — Hub de Controle Financeiro
 
 Sistema de controle financeiro pessoal inspirado no **Porquim**: dashboard completo na
 plataforma + registro de gastos por **chat estilo WhatsApp** com IA que entende linguagem
