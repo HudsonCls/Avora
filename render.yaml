@@ -34,6 +34,10 @@ services:
         sync: false
       - key: ANTHROPIC_MODEL
         value: claude-sonnet-4-6
+      # Modelo leve usado só na categorização automática (tarefa simples e
+      # frequente); manter separado do ANTHROPIC_MODEL acima.
+      - key: ANTHROPIC_FAST_MODEL
+        value: claude-haiku-4-5-20251001
       - key: TWILIO_ACCOUNT_SID
         sync: false
       - key: TWILIO_AUTH_TOKEN

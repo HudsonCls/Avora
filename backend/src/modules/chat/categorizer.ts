@@ -64,18 +64,25 @@ async function aiCategoryName(text: string, categoryNames: string[]): Promise<st
     const prompt =
       `Classifique o gasto a seguir em UMA destas categorias: ${categoryNames.join(', ')}.\n` +
       `Responda APENAS com o nome exato da categoria, sem pontuação.\n\nGasto: "${text}"`;
-    const res = await client.messages.create({
-      model: env.ANTHROPIC_MODEL,
-      max_tokens: 20,
-      messages: [{ role: 'user', content: prompt }],
-    });
+    const res = await client.messages.create(
+      {
+        model: env.ANTHROPIC_FAST_MODEL,
+        max_tokens: 20,
+        messages: [{ role: 'user', content: prompt }],
+      },
+      // Se a IA demorar mais que isso, cai no fallback por palavra-chave em vez
+      // de travar a resposta do WhatsApp — melhor responder rápido com uma
+      // categoria "boa o suficiente" do que fazer a pessoa esperar.
+      { timeout: 4000 },
+    );
     const block = res.content?.[0];
     const answer = block && block.type === 'text' ? block.text.trim() : '';
     const match = categoryNames.find((n) => normalizeText(n) === normalizeText(answer));
     return match ?? null;
   } catch (err) {
-    // Não derruba o fluxo (cai no fallback), mas registra: chave inválida ou
-    // sem créditos apareceria aqui — silenciar esconderia a má configuração.
+    // Não derruba o fluxo (cai no fallback), mas registra: chave inválida,
+    // sem créditos ou timeout apareceria aqui — silenciar esconderia a má
+    // configuração ou uma IA consistentemente lenta.
     if (!isTest) console.error('Categorização por IA falhou; usando fallback:', err);
     return null;
   }

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { validate } from '../../middleware/validate';
 import { asyncHandler } from '../../lib/asyncHandler';
-import { env } from '../../config/env';
+import { env, isTest } from '../../config/env';
 import * as service from './whatsapp.service';
 import { dispatchDueSummaries } from './summaries.service';
 import { incomingSchema } from './whatsapp.schemas';
@@ -43,12 +43,26 @@ whatsappRouter.post(
       From?: string;
       Body?: string;
     };
-    const result = await service.processIncoming({
+    const input = {
       from: body.from ?? body.From,
       text: (body.text ?? body.Body)!,
       userId: body.userId,
+    };
+
+    // Em teste, processa de forma síncrona (facilita os asserts). Em produção,
+    // responde ao Twilio JÁ (evita timeout do webhook e reenvio duplicado da
+    // mesma mensagem) e processa — busca do usuário, IA de categorização,
+    // envio da resposta — em segundo plano.
+    if (isTest) {
+      const result = await service.processIncoming(input);
+      res.status(200).json({ data: result });
+      return;
+    }
+
+    res.status(200).json({ data: { handled: true } });
+    service.processIncoming(input).catch((err) => {
+      console.error('Erro ao processar mensagem do WhatsApp em segundo plano:', err);
     });
-    res.status(200).json({ data: result });
   }),
 );
 

@@ -11,6 +11,10 @@ const schema = z.object({
   JWT_EXPIRES_IN: z.string().default('7d'),
   ANTHROPIC_API_KEY: z.string().optional().default(''),
   ANTHROPIC_MODEL: z.string().default('claude-sonnet-4-6'),
+  // Modelo leve/rápido usado só na categorização automática de gastos (tarefa
+  // simples: escolher 1 nome entre poucas opções). Mantém o ANTHROPIC_MODEL
+  // (mais robusto) livre para qualquer uso futuro que exija mais raciocínio.
+  ANTHROPIC_FAST_MODEL: z.string().default('claude-haiku-4-5-20251001'),
   TWILIO_ACCOUNT_SID: z.string().optional().default(''),
   TWILIO_AUTH_TOKEN: z.string().optional().default(''),
   TWILIO_WHATSAPP_FROM: z.string().optional().default(''),
