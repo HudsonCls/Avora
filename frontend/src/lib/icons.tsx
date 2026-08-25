@@ -13,6 +13,7 @@ import {
   CalendarFold,
   Baby,
   Fish,
+  Bus,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -23,6 +24,7 @@ export function categoryIcon(name: string): LucideIcon {
     .replace(/[̀-ͯ]/g, '')
     .toLowerCase();
   if (/aliment|comida|mercado|restaurante/.test(n)) return Utensils;
+  if (/vale transporte/.test(n)) return Bus;
   if (/transp|carro|uber|combust/.test(n)) return Car;
   if (/morad|casa|aluguel|condom/.test(n)) return Home;
   if (/lazer|entreten|stream|cinema/.test(n)) return Tv;
