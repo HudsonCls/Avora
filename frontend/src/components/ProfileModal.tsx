@@ -4,6 +4,7 @@ import { Modal, Field, Input, Button } from '@/components/ui';
 import { api, apiError } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import { useAppLock } from '@/context/AppLockContext';
+import { AVATARS, AvatarFace } from '@/lib/avatars';
 
 function AppLockSection() {
   const { pinEnabled, enablePin, disablePin } = useAppLock();
@@ -225,6 +226,7 @@ export function ProfileModal({ open, onClose }: { open: boolean; onClose: () => 
   const { user, setUser } = useAuth();
   const [name, setName] = useState(user?.name ?? '');
   const [phone, setPhone] = useState(user?.phone ?? '');
+  const [avatarId, setAvatarId] = useState(user?.avatarId ?? null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -236,6 +238,7 @@ export function ProfileModal({ open, onClose }: { open: boolean; onClose: () => 
       const r = await api.patch('/auth/me', {
         name,
         phone: phone.trim() ? phone.trim() : null,
+        avatarId,
       });
       setUser(r.data.data.user);
       onClose();
@@ -249,6 +252,22 @@ export function ProfileModal({ open, onClose }: { open: boolean; onClose: () => 
   return (
     <Modal open={open} onClose={onClose} title="Meu perfil">
       <form onSubmit={submit} className="space-y-3">
+        <Field label="Avatar">
+          <div className="flex flex-wrap gap-2">
+            {AVATARS.map((a) => (
+              <button
+                key={a.id}
+                type="button"
+                onClick={() => setAvatarId(avatarId === a.id ? null : a.id)}
+                title={a.label}
+                aria-label={a.label}
+                className={`h-11 w-11 overflow-hidden rounded-full ${avatarId === a.id ? 'ring-2 ring-offset-2 ring-brand dark:ring-offset-slate-900' : ''}`}
+              >
+                <AvatarFace avatarId={a.id} size={44} fallback={null} />
+              </button>
+            ))}
+          </div>
+        </Field>
         <Field label="Nome">
           <Input value={name} onChange={(e) => setName(e.target.value)} required />
         </Field>

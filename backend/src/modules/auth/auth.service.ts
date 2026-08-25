@@ -35,6 +35,7 @@ export interface SerializedUser {
   email: string;
   name: string;
   phone: string | null;
+  avatarId: string | null;
   emailVerifiedAt: Date | null;
   createdAt: Date;
 }
@@ -45,6 +46,7 @@ function serialize(user: User): SerializedUser {
     email: user.email,
     name: user.name,
     phone: user.phone,
+    avatarId: user.avatarId,
     emailVerifiedAt: user.emailVerifiedAt,
     createdAt: user.createdAt,
   };
@@ -109,7 +111,7 @@ export async function getMe(userId: string): Promise<SerializedUser> {
   return serialize(user);
 }
 
-/** Atualiza nome e/ou telefone do usuário. phone: null desvincula do WhatsApp. */
+/** Atualiza nome, telefone e/ou avatar do usuário. phone/avatarId: null limpa o campo. */
 export async function updateMe(userId: string, input: UpdateMeInput): Promise<SerializedUser> {
   const existing = await prisma.user.findUnique({ where: { id: userId } });
   if (!existing) throw AppError.notFound('Usuário não encontrado');
@@ -130,6 +132,7 @@ export async function updateMe(userId: string, input: UpdateMeInput): Promise<Se
     data: {
       ...(input.name !== undefined ? { name: input.name } : {}),
       ...(phone !== undefined ? { phone } : {}),
+      ...(input.avatarId !== undefined ? { avatarId: input.avatarId } : {}),
     },
   });
   return serialize(user);

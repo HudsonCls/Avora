@@ -21,6 +21,7 @@ import { ProfileModal } from '@/components/ProfileModal';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { PrivacyToggle } from '@/components/PrivacyToggle';
 import { AvoraMark } from '@/components/AvoraMark';
+import { AvatarFace } from '@/lib/avatars';
 import { Modal, Button } from '@/components/ui';
 
 const NAV = [
@@ -107,8 +108,8 @@ function Sidebar({ mobileOpen, onCloseMobile }: { mobileOpen: boolean; onCloseMo
             className="flex flex-1 items-center gap-2.5 overflow-hidden rounded-lg p-1 text-left hover:bg-slate-50 dark:hover:bg-slate-800"
             title="Editar perfil / WhatsApp"
           >
-            <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-brand text-sm font-medium text-white">
-              {initial}
+            <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center overflow-hidden rounded-full bg-brand text-sm font-medium text-white">
+              <AvatarFace avatarId={user?.avatarId} size={32} fallback={initial} />
             </div>
             <div className="flex-1 overflow-hidden">
               <div className="flex items-center gap-1 truncate text-xs font-medium text-slate-700 dark:text-slate-200">

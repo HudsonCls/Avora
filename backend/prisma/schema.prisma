@@ -19,6 +19,9 @@ model User {
   phone             String?   @unique
   password          String
   name              String
+  // Avatar pré-definido (estilo emoji), escolhido entre as opções do app —
+  // nunca upload de foto. Null = mostra a inicial do nome (fallback atual).
+  avatarId          String?
   // Resumo automático via WhatsApp: NONE | DAILY | WEEKLY | MONTHLY
   summaryFrequency  String    @default("NONE")
   summaryLastSentAt DateTime?
