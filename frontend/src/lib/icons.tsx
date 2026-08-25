@@ -12,6 +12,7 @@ import {
   CircleDollarSign,
   CalendarFold,
   Baby,
+  Fish,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -33,5 +34,6 @@ export function categoryIcon(name: string): LucideIcon {
   if (/pix/.test(n)) return CircleDollarSign;
   if (/mensalidade/.test(n)) return CalendarFold;
   if (/filho ravi/.test(n)) return Baby;
+  if (/freelancer/.test(n)) return Fish;
   return Tag;
 }
